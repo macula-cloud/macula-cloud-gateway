@@ -25,17 +25,6 @@
 			<artifactId>j2cache-spring-boot2-starter</artifactId>
 		</dependency>
 		<dependency>
-			<groupId>macula-cloud</groupId>
-			<artifactId>macula-cloud-starter-sdk</artifactId>
-			<version>${project.version}</version>
-			<exclusions>
-				<exclusion>
-					<groupId>org.springframework.boot</groupId>
-					<artifactId>spring-boot-starter-undertow</artifactId>
-				</exclusion>
-			</exclusions>
-		</dependency>
-		<dependency>
 			<groupId>org.springframework.security</groupId>
 			<artifactId>spring-security-config</artifactId>
 		</dependency>
@@ -101,6 +90,10 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-configuration-processor</artifactId>
 			<optional>true</optional>
+		</dependency>
+		<dependency>
+			<groupId>io.springfox</groupId>
+			<artifactId>springfox-swagger2</artifactId>
 		</dependency>
 		<dependency>
 			<groupId>org.isomorphism</groupId>

@@ -1,10 +1,10 @@
 package org.macula.cloud.gateway.filter;
 
-import org.macula.cloud.gateway.util.GatewayLogRecordUtils;
 import org.macula.cloud.core.context.CloudApplicationContext;
 import org.macula.cloud.core.event.GatewayLogRecordEvent;
 import org.macula.cloud.core.event.InstanceProcessEvent;
 import org.macula.cloud.core.utils.SecurityUtils;
+import org.macula.cloud.gateway.util.GatewayLogRecordUtils;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.web.server.context.ServerSecurityContextRepository;
 import org.springframework.security.web.server.context.WebSessionServerSecurityContextRepository;
@@ -30,13 +30,12 @@ public class RequestRecorderGatewayWebFilter implements WebFilter {
 				exchange.getAttributes().putIfAbsent(AlreadyFilteredAttribute, Boolean.TRUE);
 				long end = System.currentTimeMillis();
 				Mono<SecurityContext> authentication = repository.load(exchange);
-				authentication.map(SecurityContext::getAuthentication).defaultIfEmpty(SecurityUtils.getAnonymous())
+				authentication.map(SecurityContext::getAuthentication).defaultIfEmpty(SecurityUtils.cast(SecurityUtils.getSubjectPrincipal()))
 						.map(t -> GatewayLogRecordUtils.create(exchange, start, end, t)).subscribe(logRecord -> {
 							if (log.isDebugEnabled()) {
 								log.debug("Created GatewayLogRecord: {} , and publish...", logRecord);
 							}
-							CloudApplicationContext.getContainer()
-									.publishEvent(InstanceProcessEvent.wrap(new GatewayLogRecordEvent(logRecord)));
+							CloudApplicationContext.getContainer().publishEvent(InstanceProcessEvent.wrap(new GatewayLogRecordEvent(logRecord)));
 						});
 			}
 		});

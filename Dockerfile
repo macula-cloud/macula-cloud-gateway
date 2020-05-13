@@ -1,4 +1,4 @@
-FROM dperezcabrera/openjdk11-alpine
+FROM registry.cn-hangzhou.aliyuncs.com/macula-cloud/java-base:0.8.2
 WORKDIR /work
 ENV TZ=Asia/Shanghai
 RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone

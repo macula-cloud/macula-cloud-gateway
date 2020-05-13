@@ -1,25 +1,28 @@
 package org.macula.cloud.gateway.handler;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import org.springframework.boot.autoconfigure.web.ErrorProperties;
 import org.springframework.boot.autoconfigure.web.ResourceProperties;
 import org.springframework.boot.autoconfigure.web.reactive.error.DefaultErrorWebExceptionHandler;
 import org.springframework.boot.web.reactive.error.ErrorAttributes;
 import org.springframework.cloud.gateway.support.NotFoundException;
 import org.springframework.context.ApplicationContext;
-import org.springframework.http.HttpStatus;
-import org.springframework.web.reactive.function.server.*;
+import org.springframework.web.reactive.function.server.RequestPredicates;
+import org.springframework.web.reactive.function.server.RouterFunction;
+import org.springframework.web.reactive.function.server.RouterFunctions;
+import org.springframework.web.reactive.function.server.ServerRequest;
+import org.springframework.web.reactive.function.server.ServerResponse;
 import org.springframework.web.server.ResponseStatusException;
-
-import java.util.HashMap;
-import java.util.Map;
 
 /**
  * 异常处理
  */
 public class ErrorExceptionHandler extends DefaultErrorWebExceptionHandler {
 
-	public ErrorExceptionHandler(ErrorAttributes errorAttributes, ResourceProperties resourceProperties,
-								 ErrorProperties errorProperties, ApplicationContext applicationContext) {
+	public ErrorExceptionHandler(ErrorAttributes errorAttributes, ResourceProperties resourceProperties, ErrorProperties errorProperties,
+			ApplicationContext applicationContext) {
 		super(errorAttributes, resourceProperties, errorProperties, applicationContext);
 	}
 
@@ -55,9 +58,9 @@ public class ErrorExceptionHandler extends DefaultErrorWebExceptionHandler {
 	 * @param errorAttributes
 	 */
 	@Override
-	protected HttpStatus getHttpStatus(Map<String, Object> errorAttributes) {
+	protected int getHttpStatus(Map<String, Object> errorAttributes) {
 		int statusCode = (int) errorAttributes.get("code");
-		return HttpStatus.valueOf(statusCode);
+		return statusCode;
 	}
 
 	/**

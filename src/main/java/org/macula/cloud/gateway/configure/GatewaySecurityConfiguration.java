@@ -1,13 +1,13 @@
 package org.macula.cloud.gateway.configure;
 
+import org.macula.cloud.core.configure.CoreConfigurationProperties;
+import org.macula.cloud.core.principal.SubjectPrincipalSessionStorage;
 import org.macula.cloud.gateway.filter.RequestRecorderGatewayWebFilter;
 import org.macula.cloud.gateway.oauth2.OAuth2AuthenticationManager;
 import org.macula.cloud.gateway.openapi.OpenApiAuthenticationConverter;
 import org.macula.cloud.gateway.openapi.OpenApiAuthenticationManager;
 import org.macula.cloud.gateway.principal.PrincipalAuthenticationConverter;
 import org.macula.cloud.gateway.principal.PrincipalAuthenticationManager;
-import org.macula.cloud.core.configure.CoreConfigurationProperties;
-import org.macula.cloud.core.principal.SubjectPrincipalSessionStorage;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.security.oauth2.resource.UserInfoTokenServices;
 import org.springframework.context.annotation.Bean;
@@ -17,6 +17,7 @@ import org.springframework.security.authorization.ReactiveAuthorizationManager;
 import org.springframework.security.config.annotation.web.reactive.EnableWebFluxSecurity;
 import org.springframework.security.config.web.server.SecurityWebFiltersOrder;
 import org.springframework.security.config.web.server.ServerHttpSecurity;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.oauth2.server.resource.web.server.ServerBearerTokenAuthenticationConverter;
 import org.springframework.security.web.server.SecurityWebFilterChain;
 import org.springframework.security.web.server.authentication.AuthenticationWebFilter;
@@ -41,6 +42,9 @@ public class GatewaySecurityConfiguration {
 	@Autowired
 	private UserInfoTokenServices userInfoTokenServices;
 
+	@Autowired
+	private UserDetailsService userDetailsService;
+
 	@Bean
 	public ServerSecurityContextRepository serverSecurityContextRepository() {
 		return new WebSessionServerSecurityContextRepository();
@@ -49,8 +53,8 @@ public class GatewaySecurityConfiguration {
 	@Bean
 	public SecurityWebFilterChain springSecurityFilterChain(ServerHttpSecurity http) {
 		http.httpBasic().disable().formLogin().disable().logout().disable();
-		http.authorizeExchange().pathMatchers(configurationProperties.getSecurity().getPublicPaths()).permitAll()
-				.anyExchange().access(authorizationManager);
+		http.authorizeExchange().pathMatchers(configurationProperties.getSecurity().getPublicPaths()).permitAll().anyExchange()
+				.access(authorizationManager);
 		http.addFilterAt(requestRecorderGatewayWebFilter(), SecurityWebFiltersOrder.FIRST);
 		http.addFilterAt(principalResolveAuthenticationWebFilter(), SecurityWebFiltersOrder.HTTP_BASIC);
 		http.addFilterAt(openApiAuthenticationWebFilter(), SecurityWebFiltersOrder.HTTP_BASIC);
@@ -84,7 +88,7 @@ public class GatewaySecurityConfiguration {
 	@Bean
 	public WebFilter openApiAuthenticationWebFilter() {
 		ReactiveAuthenticationManager authenticationManager = new OpenApiAuthenticationManager();
-		OpenApiAuthenticationConverter authenticationConvert = new OpenApiAuthenticationConverter();
+		OpenApiAuthenticationConverter authenticationConvert = new OpenApiAuthenticationConverter(userDetailsService);
 		AuthenticationWebFilter openApiWebFilter = new AuthenticationWebFilter(authenticationManager);
 		openApiWebFilter.setServerAuthenticationConverter(authenticationConvert);
 		openApiWebFilter.setSecurityContextRepository(serverSecurityContextRepository());

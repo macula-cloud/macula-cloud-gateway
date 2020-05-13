@@ -7,7 +7,7 @@ import java.util.Map;
 import java.util.Set;
 
 import org.macula.cloud.core.configure.CoreConfigurationProperties;
-import org.macula.cloud.sdk.utils.J2CacheUtils;
+import org.macula.cloud.core.utils.J2CacheUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.security.authorization.AuthorizationDecision;
