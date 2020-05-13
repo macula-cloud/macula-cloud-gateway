@@ -15,7 +15,7 @@ build:
 release:
    stage: release
    script:
-   - mvn clean package deploy dockerfile:build dockerfile:push -U
+   - mvn clean package deploy dockerfile:build dockerfile:push -Dmaven.test.skip=true -U
    only:
     - master
     - /^release-.*$/
