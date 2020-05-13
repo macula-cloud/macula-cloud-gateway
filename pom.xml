@@ -12,13 +12,13 @@
 
 	<artifactId>macula-cloud-gateway</artifactId>
 	<name>macula-cloud-gateway</name>
+	<version>latest</version>
 	<description>Spring Cloud Macula Gateway Extension Project</description>
 
 	<dependencies>
 		<dependency>
 			<groupId>macula-cloud</groupId>
 			<artifactId>macula-cloud-starter-core</artifactId>
-			<version>${project.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>net.oschina.j2cache</groupId>

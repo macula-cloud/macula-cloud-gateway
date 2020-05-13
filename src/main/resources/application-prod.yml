@@ -42,15 +42,15 @@ spring:
     sampler:
       probability: ${ZIPKIN_PERCENTAGE:0.1}
 oauth2:
-  loginUrl: http://${OAUTH_URL:oauth:8080}/login
-  authorizeUrl: http://${OAUTH_URL:oauth:8080}/oauth/authorize
-  tokenUrl: http://${OAUTH_URL:oauth:8080}/oauth/token
+  loginUrl: ${OAUTH_URL:http://:oauth:8080}/login
+  authorizeUrl: ${OAUTH_URL:http://:oauth:8080}/oauth/authorize
+  tokenUrl: ${OAUTH_URL:http://:oauth:8080}/oauth/token
   client_id: ${OAUTH_CLIENTID:baidu}
   secert: ${OAUTH_SECERT:12345}
   authorizationGrantType: authorization_code
   redirect_uri: http://mucala.org
-  userInfouri: http://${OAUTH_URL:oauth:8080}/user/me
-  logoutOAuth2Uri: http://${OAUTH_URL:oauth:8080}/logout
+  userInfouri: ${OAUTH_URL:http://:oauth:8080}/user/me
+  logoutOAuth2Uri: ${OAUTH_URL:http://:oauth:8080}/logout
 adfs:
   userInfouri: http://${ADFS_URL:adfsclient:8082}/adfs/userInfo
   logoutADFSUri: https://adfs.infinitus-int.com:8000/logout.aspx

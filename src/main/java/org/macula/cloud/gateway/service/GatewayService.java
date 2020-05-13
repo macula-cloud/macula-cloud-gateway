@@ -8,8 +8,6 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.commons.lang.StringUtils;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 import org.macula.cloud.gateway.domain.RouteAndAclVO;
 import org.macula.cloud.gateway.repository.RedisRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,14 +29,15 @@ import org.springframework.util.CollectionUtils;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.server.ServerWebExchange;
 
+import lombok.extern.slf4j.Slf4j;
 import reactor.core.publisher.Mono;
 
 /**
  * @author linqina
  */
 @Service
+@Slf4j
 public class GatewayService implements ApplicationEventPublisherAware {
-	private static final Log log = LogFactory.getLog(GatewayService.class);
 
 	@Autowired
 	private RouteDefinitionWriter routeDefinitionWriter;
@@ -97,7 +96,7 @@ public class GatewayService implements ApplicationEventPublisherAware {
 	}
 
 	public List<String> getGroups(ServerWebExchange serverWebExchange) {
-		Map<String, Object> groups = (Map) serverWebExchange.getAttribute(ServerWebExchangeUtils.WEIGHT_ATTR);
+		Map<String, Object> groups = serverWebExchange.getAttribute(ServerWebExchangeUtils.WEIGHT_ATTR);
 		List<String> groupList = new ArrayList<String>(groups.keySet());
 		return groupList;
 	}
@@ -206,8 +205,7 @@ public class GatewayService implements ApplicationEventPublisherAware {
 				return 100000;
 			}
 			// 将path去掉前缀'/',去掉后缀'/**'
-			path = routeDefinition.getPath().startsWith("/") ? routeDefinition.getPath().substring(1)
-					: routeDefinition.getPath();
+			path = routeDefinition.getPath().startsWith("/") ? routeDefinition.getPath().substring(1) : routeDefinition.getPath();
 			path = path.endsWith("/**") ? path.substring(0, path.length() - 3) : path;
 			String[] paths = path.split("/");
 			List<String> pathComb = new ArrayList<String>();
