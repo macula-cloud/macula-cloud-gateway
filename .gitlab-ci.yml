@@ -1,0 +1,26 @@
+image: registry.cn-shanghai.aliyuncs.com/choerodon-tools/cibase:0.9.1
+
+stages:
+   - build
+   - release
+
+build:
+   stage: build
+   script:
+   - mvn clean package -U
+   only:
+    - /^release-.*$/
+    - /^hotfix-.*$/
+   
+release:
+   stage: release
+   script:
+   - mvn clean package deploy dockerfile:build dockerfile:push -U
+   only:
+    - master
+    - /^release-.*$/
+    - /^hotfix-.*$/
+    
+before_script:
+   - mkdir -p /root/.docker
+   - echo "{\"auths\":{\"registry.cn-hangzhou.aliyuncs.com\":{\"auth\":\"am9rZXdheTpmdWNrc2hpdEBhbGl5dW4=\"}}}" > /root/.docker/config.json
