@@ -1,0 +1,13 @@
+spring:
+   cloud:
+      gateway:
+         httpclient:
+            ssl:
+               use-insecure-trust-manager: true
+         discovery:
+            locator:
+               enabled: ${DISCOVERY_LOCATOR:true}
+               lower-case-service-id: true
+      loadbalancer:
+        retry:
+          enabled: true

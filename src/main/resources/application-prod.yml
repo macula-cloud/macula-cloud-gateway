@@ -1,0 +1,56 @@
+spring:
+  cloud:
+    inetutils:
+      ignored-interfaces: eth0
+      preferred-networks: 10.0
+    stream:
+      kafka:
+        binder:
+          brokers:
+          - ${KAFKA_URL:10.86.65.95:9092}
+          - ${KAFKA_URL:10.86.65.96:9092}
+          - ${KAFKA_URL:10.86.65.97:9092}
+          auto-add-partitions: true
+      default-binder: kafka
+      bindings:
+        macula-gateway-log-output:
+          destination: macula-gateway-log
+          group: macula-gateway-log-group
+          content-type: application/x-java-object
+    gateway:
+      httpclient:
+        ssl:
+          useInsecureTrustManager: true
+      discovery:
+        locator:
+          enabled: ${DISCOVERY_LOCATOR:false}
+  redis:
+    database: 0
+    password: ENC(3Uf2K45MAZ7QSnLofpkuRZZzXYTXLB/p)
+    jedis:
+      pool:
+        max-active: 8
+        max-idle: 8
+        min-idle: 0
+        max-wait: -1m
+    sentinel:
+      master: ${REDIS_MASTER:mymaster}
+      nodes: ${REDIS_NODES:10.86.65.94:26379,10.86.65.95:26379,10.86.65.96:26379}
+  zipkin:
+    base-url: ${ZIPKIN_SERVER:http://10.86.65.86:9411/}
+  sleuth:
+    sampler:
+      probability: ${ZIPKIN_PERCENTAGE:0.1}
+oauth2:
+  loginUrl: http://${OAUTH_URL:oauth:8080}/login
+  authorizeUrl: http://${OAUTH_URL:oauth:8080}/oauth/authorize
+  tokenUrl: http://${OAUTH_URL:oauth:8080}/oauth/token
+  client_id: ${OAUTH_CLIENTID:baidu}
+  secert: ${OAUTH_SECERT:12345}
+  authorizationGrantType: authorization_code
+  redirect_uri: http://mucala.org
+  userInfouri: http://${OAUTH_URL:oauth:8080}/user/me
+  logoutOAuth2Uri: http://${OAUTH_URL:oauth:8080}/logout
+adfs:
+  userInfouri: http://${ADFS_URL:adfsclient:8082}/adfs/userInfo
+  logoutADFSUri: https://adfs.infinitus-int.com:8000/logout.aspx
