@@ -1,7 +1,7 @@
 eureka:
    client:
       service-url:
-         defaultZone: ${EUREKA_SERVER:http://${EUREKA_USER:macula}:${EUREKA_PASSWORD:macula2019}@${EUREKA_HOST:registry}:${EUREKA_PORT:8761}/eureka/}
+         defaultZone: ${EUREKA_SERVER:http://macula:macula2019@localhost:8761/eureka}
    instance:
       prefer-ip-address: true
 server:
