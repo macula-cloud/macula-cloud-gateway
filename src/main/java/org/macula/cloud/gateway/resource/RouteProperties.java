@@ -1,4 +1,4 @@
-package org.macula.cloud.gateway.props;
+package org.macula.cloud.gateway.resource;
 
 import java.util.ArrayList;
 import java.util.List;

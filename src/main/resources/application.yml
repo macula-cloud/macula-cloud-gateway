@@ -29,7 +29,7 @@ spring:
                use-insecure-trust-manager: true
          discovery:
             locator:
-               enabled: ${DISCOVERY_LOCATOR:true}
+               enabled: ${SPRING_CLOUD_GATEWAY_DISCOVERY_LOCATOR_ENABLED:true}
                lower-case-service-id: true
       loadbalancer:
         retry:

@@ -16,7 +16,7 @@ public class GatewayRouteUtils {
 
 	public static RouteDefinition cast(GatewayRoute route) {
 		RouteDefinition routeDefinition = new RouteDefinition();
-		routeDefinition.setId(route.getId());
+		routeDefinition.setId(route.getId().toString());
 		routeDefinition.setUri(URI.create(route.getUri()));
 		List<PredicateDefinition> predicateDefinitions = new ArrayList<>();
 		List<FilterDefinition> filterDefinitions = new ArrayList<>();
@@ -65,7 +65,6 @@ public class GatewayRouteUtils {
 
 	public static GatewayRoute cast(RouteDefinition routeDefinition) {
 		GatewayRoute route = new GatewayRoute();
-		route.setId(routeDefinition.getId());
 		route.setUri(routeDefinition.getUri().toString());
 		route.setOrdered(routeDefinition.getOrder());
 		List<PredicateDefinition> predicateDefinitions = routeDefinition.getPredicates();

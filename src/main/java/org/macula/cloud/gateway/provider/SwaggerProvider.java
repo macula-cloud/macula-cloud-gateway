@@ -3,8 +3,8 @@ package org.macula.cloud.gateway.provider;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.macula.cloud.gateway.props.RouteProperties;
-import org.macula.cloud.gateway.props.RouteResource;
+import org.macula.cloud.gateway.resource.RouteProperties;
+import org.macula.cloud.gateway.resource.RouteResource;
 import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Component;
 

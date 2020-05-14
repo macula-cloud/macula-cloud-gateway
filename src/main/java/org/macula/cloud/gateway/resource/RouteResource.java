@@ -1,4 +1,4 @@
-package org.macula.cloud.gateway.props;
+package org.macula.cloud.gateway.resource;
 
 import org.macula.cloud.core.utils.CloudConstants;
 

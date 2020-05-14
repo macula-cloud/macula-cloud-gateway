@@ -1,7 +1,7 @@
 package org.macula.cloud.gateway.configure;
 
 import org.macula.cloud.gateway.handler.SwaggerResourceHandler;
-import org.macula.cloud.gateway.props.RouteProperties;
+import org.macula.cloud.gateway.resource.RouteProperties;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

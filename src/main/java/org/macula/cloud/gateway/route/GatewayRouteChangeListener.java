@@ -23,10 +23,10 @@ public class GatewayRouteChangeListener implements ApplicationListener<GatewayRo
 
 	@Override
 	public void onApplicationEvent(GatewayRouteChangeEvent event) {
-		log.info("handle GatewayRouteChangeEvent ...");
+		log.info("Handle GatewayRouteChangeEvent ...");
 		GatewayRoute route = event.getSource();
 		if (route.isDeleted()) {
-			routeRepository.delete(Mono.just(route.getId()));
+			routeRepository.delete(Mono.just(String.valueOf(route.getId())));
 		} else {
 			routeRepository.save(Mono.just(GatewayRouteUtils.cast(route)));
 		}
