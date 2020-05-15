@@ -55,7 +55,7 @@ public class GatewaySecurityConfiguration {
 		http.httpBasic().disable().formLogin().disable().logout().disable();
 		http.authorizeExchange().pathMatchers(configurationProperties.getSecurity().getPublicPaths()).permitAll().anyExchange()
 				.access(authorizationManager);
-		http.addFilterAt(requestRecorderGatewayWebFilter(), SecurityWebFiltersOrder.FIRST);
+		// http.addFilterAt(requestRecorderGatewayWebFilter(), SecurityWebFiltersOrder.FIRST);
 		http.addFilterAt(principalResolveAuthenticationWebFilter(), SecurityWebFiltersOrder.HTTP_BASIC);
 		http.addFilterAt(openApiAuthenticationWebFilter(), SecurityWebFiltersOrder.HTTP_BASIC);
 		http.addFilterAt(oauth2AuthenticationWebFilter(), SecurityWebFiltersOrder.OAUTH2_AUTHORIZATION_CODE);
@@ -95,7 +95,7 @@ public class GatewaySecurityConfiguration {
 		return openApiWebFilter;
 	}
 
-	// @Bean
+	//	@Bean
 	public RequestRecorderGatewayWebFilter requestRecorderGatewayWebFilter() {
 		RequestRecorderGatewayWebFilter filter = new RequestRecorderGatewayWebFilter();
 		filter.setSecurityContextRepository(serverSecurityContextRepository());
