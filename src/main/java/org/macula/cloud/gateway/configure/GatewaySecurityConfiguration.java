@@ -95,7 +95,7 @@ public class GatewaySecurityConfiguration {
 		return openApiWebFilter;
 	}
 
-	@Bean
+	// @Bean
 	public RequestRecorderGatewayWebFilter requestRecorderGatewayWebFilter() {
 		RequestRecorderGatewayWebFilter filter = new RequestRecorderGatewayWebFilter();
 		filter.setSecurityContextRepository(serverSecurityContextRepository());
