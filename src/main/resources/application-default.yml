@@ -1,0 +1,5 @@
+security:
+   oauth2:
+      client:
+         client-id: macula-cloud-gateway
+         client-secret: macula-cloud-gateway
