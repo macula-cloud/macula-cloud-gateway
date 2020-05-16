@@ -40,7 +40,7 @@ public class GatewayReactiveAuthorizationManager implements ReactiveAuthorizatio
 	@Override
 	public Mono<AuthorizationDecision> check(Mono<Authentication> authentication, AuthorizationContext context) {
 
-		Set<String> attrAuthorities = findRequestNeedAuthorities(context);
+		Set<String> attrAuthorities = findRequestPathAuthorities(context);
 		if (attrAuthorities.isEmpty()) {
 			return Mono.just(new AuthorizationDecision(true));
 		}
@@ -76,7 +76,7 @@ public class GatewayReactiveAuthorizationManager implements ReactiveAuthorizatio
 		mappings = loadingMappings;
 	}
 
-	private Set<String> findRequestNeedAuthorities(final AuthorizationContext context) {
+	private Set<String> findRequestPathAuthorities(final AuthorizationContext context) {
 		Set<String> authorities = new HashSet<String>();
 		if (mappings != null) {
 			Flux.fromIterable(mappings).concatMap(mapping -> mapping.getMatcher().matches(context.getExchange())

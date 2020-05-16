@@ -14,9 +14,8 @@ public class CacheableUserInfoTokenServices extends UserInfoTokenServices {
 	}
 
 	@Override
-	@Cacheable(OAuth2AccessToken.ACCESS_TOKEN)
-	public OAuth2Authentication loadAuthentication(String accessToken)
-			throws AuthenticationException, InvalidTokenException {
+	@Cacheable(cacheNames = OAuth2AccessToken.ACCESS_TOKEN, key = "#accessToken")
+	public OAuth2Authentication loadAuthentication(String accessToken) throws AuthenticationException, InvalidTokenException {
 		return super.loadAuthentication(accessToken);
 	}
 

@@ -18,8 +18,24 @@ public class GatewayRouteService {
 		this.repository = repository;
 	}
 
-	@Cacheable(cacheNames = "routes")
+	@Cacheable(cacheNames = "routes", key = "GatewayRoutes")
 	public List<GatewayRoute> loadGatewayRoutes() {
 		return repository.findAll(Sort.by(Order.asc("ordered")));
 	}
+
+	public void update(GatewayRoute gatewayRoute) {
+		repository.save(gatewayRoute);
+	}
+
+	public void delete(String id) {
+		try {
+			long key = Long.parseLong(id);
+			if (key > 0) {
+				repository.deleteById(key);
+			}
+		} catch (Exception ex) {
+			// IGNORE
+		}
+	}
+
 }

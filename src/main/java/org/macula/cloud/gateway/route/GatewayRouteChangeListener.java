@@ -1,8 +1,8 @@
 package org.macula.cloud.gateway.route;
 
-import org.macula.cloud.gateway.util.GatewayRouteUtils;
 import org.macula.cloud.core.domain.GatewayRoute;
 import org.macula.cloud.core.event.GatewayRouteChangeEvent;
+import org.macula.cloud.gateway.util.GatewayRouteUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationListener;
 import org.springframework.stereotype.Component;
@@ -15,9 +15,9 @@ import reactor.core.publisher.Mono;
 public class GatewayRouteChangeListener implements ApplicationListener<GatewayRouteChangeEvent> {
 
 	@Autowired
-	private J2CacheBackendRouteRepository routeRepository;
+	private GatewayRouteDefinitionRepository routeRepository;
 
-	public GatewayRouteChangeListener(J2CacheBackendRouteRepository routeRepository) {
+	public GatewayRouteChangeListener(GatewayRouteDefinitionRepository routeRepository) {
 		this.routeRepository = routeRepository;
 	}
 
