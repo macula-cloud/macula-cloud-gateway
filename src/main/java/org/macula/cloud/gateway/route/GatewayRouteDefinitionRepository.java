@@ -7,10 +7,12 @@ import org.macula.cloud.gateway.service.GatewayRouteService;
 import org.macula.cloud.gateway.util.GatewayRouteUtils;
 import org.springframework.cloud.gateway.route.RouteDefinition;
 import org.springframework.cloud.gateway.route.RouteDefinitionRepository;
+import org.springframework.stereotype.Component;
 
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
+@Component
 public class GatewayRouteDefinitionRepository implements RouteDefinitionRepository {
 
 	private GatewayRouteService service;
