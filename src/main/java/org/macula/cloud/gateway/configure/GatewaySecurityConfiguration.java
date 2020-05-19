@@ -53,6 +53,7 @@ public class GatewaySecurityConfiguration {
 	@Bean
 	public SecurityWebFilterChain springSecurityFilterChain(ServerHttpSecurity http) {
 		http.httpBasic().disable().formLogin().disable().logout().disable();
+		http.csrf().disable();
 		http.authorizeExchange().pathMatchers(configurationProperties.getSecurity().getPublicPaths()).permitAll().anyExchange()
 				.access(authorizationManager);
 		// http.addFilterAt(requestRecorderGatewayWebFilter(), SecurityWebFiltersOrder.FIRST);
