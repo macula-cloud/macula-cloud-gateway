@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.macula.cloud.gateway.domain.GatewayRoute;
 import org.macula.cloud.gateway.repository.GatewayRouteRepository;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.domain.Sort.Order;
 import org.springframework.stereotype.Service;
@@ -17,6 +18,7 @@ public class GatewayRouteService {
 		this.repository = repository;
 	}
 
+	@Cacheable(cacheNames = "routes", unless = "#result == null || #result.isEmpty()")
 	public List<GatewayRoute> loadGatewayRoutes() {
 		return repository.findAll(Sort.by(Order.asc("ordered")));
 	}
