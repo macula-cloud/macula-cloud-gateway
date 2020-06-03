@@ -1,4 +1,4 @@
-package org.macula.cloud.gateway.controller;
+package org.macula.cloud.gateway.endpoint;
 
 import java.util.HashMap;
 import java.util.List;
@@ -7,7 +7,6 @@ import java.util.Map;
 import org.springframework.cloud.client.ServiceInstance;
 import org.springframework.cloud.client.discovery.DiscoveryClient;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import lombok.AllArgsConstructor;
@@ -17,15 +16,14 @@ import lombok.AllArgsConstructor;
  */
 @RestController
 @AllArgsConstructor
-@RequestMapping("/discovery")
-public class DiscoveryClientController {
+public class DiscoveryClientEndpoint {
 
 	private final DiscoveryClient discoveryClient;
 
 	/**
 	 * 获取服务实例
 	 */
-	@GetMapping("/instances")
+	@GetMapping("/actuator/discovery")
 	public Map<String, List<ServiceInstance>> instances() {
 		Map<String, List<ServiceInstance>> instances = new HashMap<>(16);
 		List<String> services = discoveryClient.getServices();

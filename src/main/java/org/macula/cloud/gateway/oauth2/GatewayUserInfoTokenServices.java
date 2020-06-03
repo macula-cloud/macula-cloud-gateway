@@ -7,9 +7,9 @@ import org.springframework.security.oauth2.common.OAuth2AccessToken;
 import org.springframework.security.oauth2.common.exceptions.InvalidTokenException;
 import org.springframework.security.oauth2.provider.OAuth2Authentication;
 
-public class CacheableUserInfoTokenServices extends UserInfoTokenServices {
+public class GatewayUserInfoTokenServices extends UserInfoTokenServices {
 
-	public CacheableUserInfoTokenServices(String userInfoEndpointUrl, String clientId) {
+	public GatewayUserInfoTokenServices(String userInfoEndpointUrl, String clientId) {
 		super(userInfoEndpointUrl, clientId);
 	}
 

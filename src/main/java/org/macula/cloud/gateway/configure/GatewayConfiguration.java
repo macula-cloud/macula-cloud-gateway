@@ -1,6 +1,6 @@
 package org.macula.cloud.gateway.configure;
 
-import org.macula.cloud.gateway.oauth2.CacheableUserInfoTokenServices;
+import org.macula.cloud.gateway.oauth2.GatewayUserInfoTokenServices;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.security.oauth2.resource.ResourceServerProperties;
 import org.springframework.boot.autoconfigure.security.oauth2.resource.UserInfoTokenServices;
@@ -27,8 +27,7 @@ public class GatewayConfiguration {
 
 	@Bean
 	public UserInfoTokenServices cacheableUserInfoTokenServices() {
-		CacheableUserInfoTokenServices tokenServices = new CacheableUserInfoTokenServices(resource.getUserInfoUri(),
-				resource.getClientId());
+		GatewayUserInfoTokenServices tokenServices = new GatewayUserInfoTokenServices(resource.getUserInfoUri(), resource.getClientId());
 		tokenServices.setRestTemplate(new OAuth2RestTemplate(client));
 		return tokenServices;
 	}
