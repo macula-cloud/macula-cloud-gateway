@@ -1,6 +1,5 @@
 package org.macula.cloud.gateway.oauth2;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.ReactiveAuthenticationManager;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.oauth2.common.exceptions.InvalidTokenException;
@@ -15,7 +14,6 @@ import reactor.core.publisher.Mono;
 @Slf4j
 public class OAuth2AuthenticationManager implements ReactiveAuthenticationManager {
 
-	@Autowired
 	private ResourceServerTokenServices tokenServices;
 
 	@Override

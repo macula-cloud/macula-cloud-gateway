@@ -1,35 +1,39 @@
 package org.macula.cloud.gateway.configure;
 
-import org.macula.cloud.gateway.oauth2.GatewayUserInfoTokenServices;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.macula.cloud.core.configure.CoreConfigurationProperties;
+import org.macula.cloud.core.oauth2.SubjectPrincipalExtractor;
+import org.macula.cloud.core.oauth2.SubjectPrincipalUserInfoTokenServices;
+import org.macula.cloud.gateway.filter.JWTAuthenticationSignFilter;
 import org.springframework.boot.autoconfigure.security.oauth2.resource.ResourceServerProperties;
 import org.springframework.boot.autoconfigure.security.oauth2.resource.UserInfoTokenServices;
-import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.oauth2.client.OAuth2RestTemplate;
 import org.springframework.security.oauth2.client.resource.OAuth2ProtectedResourceDetails;
+import org.springframework.security.web.server.context.ServerSecurityContextRepository;
+
+import lombok.AllArgsConstructor;
 
 @Configuration
+@AllArgsConstructor
 public class GatewayConfiguration {
-
-	@Autowired
 	private OAuth2ProtectedResourceDetails client;
 
-	@Autowired
 	private ResourceServerProperties resource;
 
+	private CoreConfigurationProperties properties;
+
 	@Bean
-	@ConfigurationProperties(prefix = "oauth2")
-	public OAuth2Config gatewayOAuth2Config() {
-		return new OAuth2Config();
+	public UserInfoTokenServices subjectPrincipalUserInfoTokenServices() {
+		SubjectPrincipalUserInfoTokenServices tokenServices = new SubjectPrincipalUserInfoTokenServices(resource.getUserInfoUri(),
+				resource.getClientId(), new SubjectPrincipalExtractor(), properties.getSecurity().getJwtSigner());
+		tokenServices.setRestTemplate(new OAuth2RestTemplate(client));
+		return tokenServices;
 	}
 
 	@Bean
-	public UserInfoTokenServices cacheableUserInfoTokenServices() {
-		GatewayUserInfoTokenServices tokenServices = new GatewayUserInfoTokenServices(resource.getUserInfoUri(), resource.getClientId());
-		tokenServices.setRestTemplate(new OAuth2RestTemplate(client));
-		return tokenServices;
+	public JWTAuthenticationSignFilter jwtAuthenticationFilter(ServerSecurityContextRepository repository) {
+		return new JWTAuthenticationSignFilter(repository, properties.getSecurity().getJwtSigner());
 	}
 
 }

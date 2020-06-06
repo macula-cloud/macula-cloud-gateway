@@ -10,11 +10,11 @@ j2cache:
       provider_class: net.oschina.j2cache.cache.support.redis.SpringRedisProvider
       config_section: spring.redis
 caffeine:
-    region:
-        default: 1000, 1h
-        session: 10000, 4h
-        users: 1000, 10s
-        routes: 1000, 60s
+   region:
+      default: 1000, 1h
+      session: 10000, 4h
+      users: 1000, 10s
+      routes: 1000, 60s
 spring:
    cache:
       type: GENERIC
@@ -33,15 +33,5 @@ spring:
                enabled: ${SPRING_CLOUD_GATEWAY_DISCOVERY_LOCATOR_ENABLED:true}
                lower-case-service-id: true
       loadbalancer:
-        retry:
-          enabled: true
-oauth2:
-   loginUrl: ${OAUTH_URL:http://:172.20.72.134:8085}/login
-   authorizeUrl: ${OAUTH_URL:http://:172.20.72.134:8085}/oauth/authorize
-   tokenUrl: ${OAUTH_URL:http://:172.20.72.134:8085}/oauth/token
-   clientId: ${OAUTH_CLIENTID:baidu}
-   secert: ${OAUTH_SECERT:12345}
-   authorizationGrantType: authorization_code
-   redirectUri: http://mucala.org
-   userInfouri: ${OAUTH_URL:http://:172.20.72.134:8085}/user/me
-   logoutOAuth2Uri: ${OAUTH_URL:http://:172.20.72.134:8085}/logout
+         retry:
+            enabled: true

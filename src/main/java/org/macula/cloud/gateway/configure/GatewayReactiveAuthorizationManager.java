@@ -14,7 +14,6 @@ import org.springframework.security.authorization.AuthorizationDecision;
 import org.springframework.security.authorization.ReactiveAuthorizationManager;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.web.server.authorization.AuthorizationContext;
-import org.springframework.security.web.server.context.WebSessionServerSecurityContextRepository;
 import org.springframework.security.web.server.util.matcher.PathPatternParserServerWebExchangeMatcher;
 import org.springframework.security.web.server.util.matcher.ServerWebExchangeMatcher;
 import org.springframework.security.web.server.util.matcher.ServerWebExchangeMatcherEntry;
@@ -34,8 +33,6 @@ public class GatewayReactiveAuthorizationManager implements ReactiveAuthorizatio
 
 	@Autowired
 	private CoreConfigurationProperties configuration;
-
-	WebSessionServerSecurityContextRepository repository = new WebSessionServerSecurityContextRepository();
 
 	@Override
 	public Mono<AuthorizationDecision> check(Mono<Authentication> authentication, AuthorizationContext context) {

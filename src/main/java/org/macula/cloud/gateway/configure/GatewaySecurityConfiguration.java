@@ -8,8 +8,6 @@ import org.macula.cloud.gateway.openapi.OpenApiAuthenticationConverter;
 import org.macula.cloud.gateway.openapi.OpenApiAuthenticationManager;
 import org.macula.cloud.gateway.principal.PrincipalAuthenticationConverter;
 import org.macula.cloud.gateway.principal.PrincipalAuthenticationManager;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.security.oauth2.resource.UserInfoTokenServices;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.ReactiveAuthenticationManager;
@@ -18,6 +16,7 @@ import org.springframework.security.config.annotation.web.reactive.EnableWebFlux
 import org.springframework.security.config.web.server.SecurityWebFiltersOrder;
 import org.springframework.security.config.web.server.ServerHttpSecurity;
 import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.oauth2.provider.token.ResourceServerTokenServices;
 import org.springframework.security.oauth2.server.resource.web.server.ServerBearerTokenAuthenticationConverter;
 import org.springframework.security.web.server.SecurityWebFilterChain;
 import org.springframework.security.web.server.authentication.AuthenticationWebFilter;
@@ -26,23 +25,21 @@ import org.springframework.security.web.server.context.ServerSecurityContextRepo
 import org.springframework.security.web.server.context.WebSessionServerSecurityContextRepository;
 import org.springframework.web.server.WebFilter;
 
+import lombok.AllArgsConstructor;
+
 @Configuration
 @EnableWebFluxSecurity
+@AllArgsConstructor
 public class GatewaySecurityConfiguration {
 
-	@Autowired
 	private CoreConfigurationProperties configurationProperties;
 
-	@Autowired
 	private ReactiveAuthorizationManager<AuthorizationContext> authorizationManager;
 
-	@Autowired
 	private SubjectPrincipalSessionStorage sessionStorage;
 
-	@Autowired
-	private UserInfoTokenServices userInfoTokenServices;
+	private ResourceServerTokenServices userInfoTokenServices;
 
-	@Autowired
 	private UserDetailsService userDetailsService;
 
 	@Bean

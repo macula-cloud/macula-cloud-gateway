@@ -3,3 +3,17 @@ security:
       client:
          client-id: macula-cloud-gateway
          client-secret: macula-cloud-gateway
+         access-token-uri: https://login.ebestpet.com/oauth/token
+         user-authorization-uri: https://login.ebestpet.com/oauth/authorize
+      resource:
+         token-info-uri: https://login.ebestpet.com/oauth/check_token
+         user-info-uri: http://localhost:8010/api/user/me
+
+management:
+   endpoint:
+      health:
+         show-details: ALWAYS
+   endpoints:
+      web:
+         exposure:
+            include: '*'
