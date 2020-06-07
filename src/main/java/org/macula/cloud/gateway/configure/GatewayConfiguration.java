@@ -4,6 +4,7 @@ import org.macula.cloud.core.configure.CoreConfigurationProperties;
 import org.macula.cloud.core.oauth2.SubjectPrincipalExtractor;
 import org.macula.cloud.core.oauth2.SubjectPrincipalUserInfoTokenServices;
 import org.macula.cloud.gateway.filter.JWTAuthenticationSignFilter;
+import org.macula.cloud.gateway.filter.RedirectResponseGlobalFilter;
 import org.springframework.boot.autoconfigure.security.oauth2.resource.ResourceServerProperties;
 import org.springframework.boot.autoconfigure.security.oauth2.resource.UserInfoTokenServices;
 import org.springframework.context.annotation.Bean;
@@ -34,6 +35,11 @@ public class GatewayConfiguration {
 	@Bean
 	public JWTAuthenticationSignFilter jwtAuthenticationFilter(ServerSecurityContextRepository repository) {
 		return new JWTAuthenticationSignFilter(repository, properties.getSecurity().getJwtSigner());
+	}
+
+	@Bean
+	public RedirectResponseGlobalFilter redirectResponseGlobalFilter() {
+		return new RedirectResponseGlobalFilter();
 	}
 
 }
