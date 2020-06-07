@@ -7,7 +7,7 @@ security:
          user-authorization-uri: https://login.ebestpet.com/oauth/authorize
       resource:
          token-info-uri: https://login.ebestpet.com/oauth/check_token
-         user-info-uri: http://localhost:8010/api/user/me
+         user-info-uri: https://login.ebestpet.com/api/user/me
 
 management:
    endpoint:
