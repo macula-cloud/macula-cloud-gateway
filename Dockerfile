@@ -1,4 +1,4 @@
-FROM registry.cn-hangzhou.aliyuncs.com/macula-cloud/java-base:0.8.2
+FROM pdsd-registry.infinitus.com.cn/tools/javabase:0.8.2
 ARG JAR_FILE 
 ARG SERVICE_NAME
 ENV JAR_FILE=${JAR_FILE}
