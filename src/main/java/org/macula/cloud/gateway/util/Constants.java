@@ -11,9 +11,9 @@ public class Constants {
 	public static final String GATEWAY_ROUTES = "geteway_routes";
 
 	// 登录URL
-	public static String URL_LOGIN = "login";
+	public static final String URL_LOGIN = "login";
 	// 不需要经过过滤器的URL
-	public static String[] URL_WITHOUT_FILTER = { URL_LOGIN };
+	public static final String[] URL_WITHOUT_FILTER = { URL_LOGIN };
 
 	// token超时时间
 	public static Long TOKEN_TIMEOUT = 60 * 60L;
@@ -22,30 +22,30 @@ public class Constants {
 	public static Long OAUTH_TIMEOUT = 30 * 60L;
 
 	// oauth key
-	public static String OAUTH_KEY = "oauth_key";
+	public static final String OAUTH_KEY = "oauth_key";
 
 	// token key
-	public static String TOKEN_KEY = "token_key";
+	public static final String TOKEN_KEY = "token_key";
 
 	// oauth_code key
-	public static String OAUTH_CODE_KEY = "oauth_code_key";
+	public static final String OAUTH_CODE_KEY = "oauth_code_key";
 
 	/**
 	 * 使用moria的权限系统
 	 */
-	public static String MORIA_SELF_SYSTEM_YES = "self";
+	public static final String MORIA_SELF_SYSTEM_YES = "self";
 	/**
 	 * 使用指定的权限系统
 	 */
-	public static String MORIA_SELF_SYSTEM_NO = "other";
+	public static final String MORIA_SELF_SYSTEM_NO = "other";
 	/**
 	 * 需要登录才可以访问
 	 */
-	public static String API_NEED_SIGN_IN_YES = "yes";
+	public static final String API_NEED_SIGN_IN_YES = "yes";
 	/**
 	 * 任何用户都可以访问
 	 */
-	public static String API_NEED_SIGN_IN_NO = "no";
+	public static final String API_NEED_SIGN_IN_NO = "no";
 
 	/**
 	 * cookie_token_key
