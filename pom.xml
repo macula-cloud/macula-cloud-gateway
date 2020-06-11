@@ -141,7 +141,6 @@
 				<configuration>
 					<repository>${docker.registry}/${project.groupId}/${project.artifactId}</repository>
 					<tag>latest</tag>
-					<useMavenSettingsForAuth>true</useMavenSettingsForAuth>
 					<buildArgs>
 						<SERVER_PORT>8080</SERVER_PORT>
 						<SERVICE_NAME>${project.artifactId}</SERVICE_NAME>
