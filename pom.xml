@@ -139,8 +139,8 @@
 				<groupId>com.spotify</groupId>
 				<artifactId>dockerfile-maven-plugin</artifactId>
 				<configuration>
-					<repository>pdsd-registry.infinitus.com.cn/${project.groupId}/${project.artifactId}</repository>
-					<tag>${project.version}</tag>
+					<repository>${docker.registry}/${project.groupId}/${project.artifactId}</repository>
+					<tag>latest</tag>
 					<useMavenSettingsForAuth>true</useMavenSettingsForAuth>
 					<buildArgs>
 						<SERVER_PORT>8080</SERVER_PORT>
