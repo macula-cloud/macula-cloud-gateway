@@ -17,7 +17,8 @@ build:
 release:
    stage: release
    script:
-   - mvn clean package deploy dockerfile:build dockerfile:push -Ddockerfile.username=jokeway@gmail.com -Ddockerfile.password=macula@cloud -Dmaven.test.skip=true -U
+   - mvn clean package deploy dockerfile:build -Dmaven.test.skip=true -U
+   - mvn dockerfile:push -Ddockerfile.username=jokeway@gmail.com -Ddockerfile.password=macula@cloud
    only:
     - master
     - /^release-.*$/
