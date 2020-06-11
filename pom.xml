@@ -12,7 +12,6 @@
 
 	<artifactId>macula-cloud-gateway</artifactId>
 	<name>macula-cloud-gateway</name>
-	<version>latest</version>
 	<description>Spring Cloud Macula Gateway Extension Project</description>
 
 	<dependencies>
@@ -141,7 +140,7 @@
 				<artifactId>dockerfile-maven-plugin</artifactId>
 				<configuration>
 					<repository>${docker.registry}/${project.groupId}/${project.artifactId}</repository>
-					<tag>${project.version}</tag>
+					<tag>latest</tag>
 					<useMavenSettingsForAuth>true</useMavenSettingsForAuth>
 					<buildArgs>
 						<SERVER_PORT>8080</SERVER_PORT>
