@@ -34,4 +34,4 @@ release:
 before_script:
    - *auto_devops
    - mkdir -p /root/.docker
-   - echo "{\"auths\":{\"registry.cn-hangzhou.aliyuncs.com\":{\"auth\":\"am9rZXdheTpmdWNrc2hpdEBhbGl5dW4=\"}}}" > /root/.docker/config.json
+   - echo "{\"auths\":{\"registry.cn-hangzhou.aliyuncs.com\":{\"auth\":\"am9rZXdheTptYWN1bGFAY2xvdWQ=\"}}}" > /root/.docker/config.json
