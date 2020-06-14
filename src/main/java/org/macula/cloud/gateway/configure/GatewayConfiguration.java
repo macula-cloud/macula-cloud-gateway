@@ -9,6 +9,7 @@ import org.springframework.boot.autoconfigure.security.oauth2.resource.ResourceS
 import org.springframework.boot.autoconfigure.security.oauth2.resource.UserInfoTokenServices;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.jwt.crypto.sign.MacSigner;
 import org.springframework.security.oauth2.client.OAuth2RestTemplate;
 import org.springframework.security.oauth2.client.resource.OAuth2ProtectedResourceDetails;
 import org.springframework.security.web.server.context.ServerSecurityContextRepository;
@@ -27,14 +28,14 @@ public class GatewayConfiguration {
 	@Bean
 	public UserInfoTokenServices subjectPrincipalUserInfoTokenServices() {
 		SubjectPrincipalUserInfoTokenServices tokenServices = new SubjectPrincipalUserInfoTokenServices(resource.getUserInfoUri(),
-				resource.getClientId(), new SubjectPrincipalExtractor(), properties.getSecurity().getJwtSigner());
+				resource.getClientId(), new SubjectPrincipalExtractor(), new MacSigner(properties.getSecurity().getJwtKey()));
 		tokenServices.setRestTemplate(new OAuth2RestTemplate(client));
 		return tokenServices;
 	}
 
 	@Bean
 	public JWTAuthenticationSignFilter jwtAuthenticationFilter(ServerSecurityContextRepository repository) {
-		return new JWTAuthenticationSignFilter(repository, properties.getSecurity().getJwtSigner());
+		return new JWTAuthenticationSignFilter(repository, new MacSigner(properties.getSecurity().getJwtKey()));
 	}
 
 	@Bean
