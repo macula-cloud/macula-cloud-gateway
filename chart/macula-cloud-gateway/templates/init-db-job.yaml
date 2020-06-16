@@ -1,0 +1,73 @@
+{{- define "initDB.timeout" -}}
+{{- if .Values.initDB -}}
+{{ default (300) .Values.initDB.timeout }}
+{{- else -}}
+300
+{{- end -}}
+{{- end -}}
+
+
+{{- define "initDB.image" -}}
+{{- if .Values.initDB -}}
+{{ default ("registry.cn-hangzhou.aliyuncs.com/choerodon-tools/dbtool:0.6.4") .Values.initDB.image }}
+{{- else -}}
+registry.cn-hangzhou.aliyuncs.com/choerodon-tools/dbtool:0.6.4
+{{- end -}}
+{{- end -}}
+
+
+{{- define "initDB.yaml" -}}
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: {{ .Release.Name }}-init-db
+  annotations:
+    "helm.sh/hook-weight": "1"
+    "helm.sh/hook": pre-install,pre-upgrade
+    "helm.sh/hook-delete-policy": "before-hook-creation"
+  labels:
+{{ include "standard.label" . | indent 4 }}
+spec:
+  backoffLimit: 1
+  activeDeadlineSeconds: {{ include "initDB.timeout" . }}
+  template:
+    metadata:
+      name: {{ .Release.Name }}-init-db
+    spec:
+      initContainers:
+      - command:
+        - sh
+        - -c
+        - cp -rf /var/choerodon/* /tools
+        image: {{ include "initDB.image" . | quote }}
+        imagePullPolicy: IfNotPresent
+        name: tools
+        volumeMounts:
+        - mountPath: /tools
+          name: tools-jar
+      containers:
+      - name: {{ .Release.Name }}-init-db
+        image: {{ include "service.image" . }}
+        env:
+{{- include "buildrunenv" . | indent 8 }}
+        command:
+        - /bin/sh
+        - -c
+        - >
+          java -Ddata.jar=/{{ .Chart.Name }}.jar -jar /var/choerodon/choerodon-tool-liquibase.jar;
+        volumeMounts:
+        - mountPath: /var/choerodon
+          name: tools-jar
+      restartPolicy: Never
+      volumes:
+      - emptyDir: {}
+        name: tools-jar
+{{- end }}
+
+{{- if not .Values.initDB  }}
+{{ include "initDB.yaml" . }}
+{{- else -}}
+  {{- if not .Values.initDB.disabled }}
+{{ include "initDB.yaml" . }}
+  {{- end }}
+{{- end }}

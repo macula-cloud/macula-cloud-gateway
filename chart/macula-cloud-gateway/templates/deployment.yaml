@@ -1,0 +1,69 @@
+apiVersion: {{ include "app.deployment.apiVersion" . }}
+kind: Deployment
+metadata:
+  name: {{ .Release.Name }}
+  labels:
+{{ include "standard.label" . | indent 4 }}
+{{ include "logging.label" . | indent 4 }}
+spec:
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: 25%
+      maxSurge: 25%
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+{{ include "match.label" . | indent 6 }}
+  template:
+    metadata:
+      annotations:
+{{ include "monitoring.annotations" . | indent 8 }}
+      labels:
+{{ include "pod.labels" . | indent 8 }}
+    spec:
+  {{- if .Values.priorityClassName }}
+      priorityClassName: "{{ .Values.priorityClassName }}"
+  {{- end }}
+      containers:
+      - name: {{ .Release.Name }}
+        image: {{ include "service.image" . }}
+        imagePullPolicy: {{ .Values.image.pullPolicy }}
+        env:
+{{- include "buildrunenv" . | indent 8 }}
+        - name: SERVER_PORT
+          value: {{ include "server.port" . | quote }}
+        - name: MANAGEMENT_SERVER_PORT
+          value: {{ include "management.server.port" . | quote }}
+        ports:
+        - name: http
+          containerPort: {{ include "server.port" . }}
+          protocol: TCP
+        - name: actuator
+          containerPort: {{ include "management.server.port" . }}
+          protocol: TCP
+        resources:
+{{ toYaml .Values.resources | indent 10 }}
+        readinessProbe:
+          initialDelaySeconds: 45
+          periodSeconds: 5
+          timeoutSeconds: 3
+          successThreshold: 1
+          failureThreshold: 3
+          exec:
+            command:
+            - /bin/sh
+            - -c
+            - nc -z localhost {{ include "server.port" . }} && curl -s --fail localhost:{{- include "management.server.port" . }}/actuator/health
+{{- with .Values.nodeSelector }}
+      nodeSelector:
+{{ toYaml . | indent 8 }}
+{{- end }}
+{{- with .Values.affinity }}
+      affinity:
+{{ toYaml . | indent 8 }}
+{{- end }}
+{{- with .Values.tolerations }}
+      tolerations:
+{{ toYaml . | indent 8 }}
+{{- end }}

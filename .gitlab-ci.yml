@@ -18,6 +18,7 @@ release:
    stage: release
    script:
    - mvn clean package deploy dockerfile:build dockerfile:push -Dmaven.test.skip=true -U
+   - chart_build
    only:
     - master
     - /^release-.*$/
