@@ -1,6 +1,7 @@
 package org.macula.cloud.gateway.configure;
 
 import org.macula.cloud.core.configure.CoreConfigurationProperties;
+import org.macula.cloud.core.oauth2.SubjectAuthoritiesExtractor;
 import org.macula.cloud.core.oauth2.SubjectPrincipalExtractor;
 import org.macula.cloud.core.oauth2.SubjectPrincipalUserInfoTokenServices;
 import org.macula.cloud.gateway.filter.JWTAuthenticationSignFilter;
@@ -27,8 +28,10 @@ public class GatewayConfiguration {
 
 	@Bean
 	public UserInfoTokenServices subjectPrincipalUserInfoTokenServices() {
+		SubjectAuthoritiesExtractor authoritesExtractor = new SubjectAuthoritiesExtractor(properties.getSecurity().getDefaultRole());
 		SubjectPrincipalUserInfoTokenServices tokenServices = new SubjectPrincipalUserInfoTokenServices(resource.getUserInfoUri(),
-				resource.getClientId(), new SubjectPrincipalExtractor(), new MacSigner(properties.getSecurity().getJwtKey()));
+				resource.getClientId(), new SubjectPrincipalExtractor(authoritesExtractor), authoritesExtractor,
+				new MacSigner(properties.getSecurity().getJwtKey()));
 		tokenServices.setRestTemplate(new OAuth2RestTemplate(client));
 		return tokenServices;
 	}
