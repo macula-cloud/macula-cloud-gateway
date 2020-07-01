@@ -1,5 +1,6 @@
 package org.macula.cloud.gateway.openapi;
 
+import java.util.Collections;
 import java.util.Date;
 import java.util.TreeMap;
 
@@ -40,7 +41,7 @@ public class OpenApiAuthenticationHelper {
 
 	public final static String ACCESS_TOKEN = "access_token";
 
-	public static boolean validate(ServerHttpRequest request, ServerHttpResponse response, String appSecret) {
+	public static boolean validate(ServerHttpRequest request, ServerHttpResponse respons) {
 		MultiValueMap<String, String> queryParams = request.getQueryParams();
 		// 检测是否含有appKey
 		// 检测是否含有timestamp
@@ -56,14 +57,15 @@ public class OpenApiAuthenticationHelper {
 		}
 
 		// 1.提取appSecret，判断appKey是否存在
-		// String appSecret = application == null ? "" : application.getSecureKey();
+		// TODO open api secret
+		String appSecret = "admin123*";
 		if (StringUtils.isEmpty(appSecret)) {
 			throw new OpenApiParameterException("param.20");
 		}
 
 		// 2.检测签名是否有效
 		// 将所有请求参数除sign和图片等除外放入TreeMap
-		TreeMap<String, String> params = ServerRequestUtils.getOpenApiRequestParams(request);
+		TreeMap<String, String> params = ServerRequestUtils.getOpenApiRequestParams(request, Collections.singleton(SIGN));
 
 		// 检测SIGN是否有效
 		String signed = null;

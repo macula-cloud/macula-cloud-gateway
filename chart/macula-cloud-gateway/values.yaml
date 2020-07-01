@@ -13,7 +13,7 @@ image:
 
 initDB:
   # 是禁用始化数据库
-  disabled: false
+  disabled: true
 
 ## springboot配置
 application:

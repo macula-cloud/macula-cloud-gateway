@@ -29,7 +29,7 @@ public class OpenApiAuthenticationConverter implements ServerAuthenticationConve
 		if (authentication == null && ServerRequestUtils.isOpenAPIRequest(exchange.getRequest())) {
 			log.info("Resolve open api authentication from exchange ");
 			try {
-				OpenApiAuthenticationHelper.validate(exchange.getRequest(), exchange.getResponse(), "");
+				OpenApiAuthenticationHelper.validate(exchange.getRequest(), exchange.getResponse());
 			} catch (OpenApiParameterException ex) {
 				log.error("OpenApiAuthenticationConverter error :", ex);
 				throw ex;
