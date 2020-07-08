@@ -44,17 +44,24 @@ spec:
           protocol: TCP
         resources:
 {{ toYaml .Values.resources | indent 10 }}
-        readinessProbe:
-          initialDelaySeconds: 45
+        livenessProbe:
+          initialDelaySeconds: 450
           periodSeconds: 5
           timeoutSeconds: 3
           successThreshold: 1
           failureThreshold: 3
-          exec:
-            command:
-            - /bin/sh
-            - -c
-            - nc -z localhost {{ include "server.port" . }} && curl -s --fail localhost:{{- include "management.server.port" . }}/actuator/health
+          httpGet:
+            path: /actuator/health/liveness
+            port: {{ include "management.server.port" . }}
+        readinessProbe:
+          initialDelaySeconds: 450
+          periodSeconds: 5
+          timeoutSeconds: 3
+          successThreshold: 1
+          failureThreshold: 3
+          httpGet:
+            path: /actuator/health/readiness
+            port: {{ include "management.server.port" . }}
 {{- with .Values.nodeSelector }}
       nodeSelector:
 {{ toYaml . | indent 8 }}
