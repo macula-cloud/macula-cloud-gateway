@@ -1,6 +1,6 @@
 package org.macula.cloud.gateway.resource;
 
-import org.macula.cloud.core.utils.CloudConstants;
+import org.macula.cloud.api.protocol.ApiConstants;
 
 import lombok.Data;
 
@@ -23,6 +23,6 @@ public class RouteResource {
 	/**
 	 * 文档版本
 	 */
-	private String version = CloudConstants.APPLICATION_VERSION;
+	private String version = ApiConstants.APPLICATION_VERSION;
 
 }
