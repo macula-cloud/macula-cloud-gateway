@@ -1,6 +1,6 @@
 package org.macula.cloud.gateway.openapi;
 
-import org.macula.cloud.core.context.CloudApplicationContext;
+import org.macula.cloud.api.context.CloudApplicationContext;
 import org.macula.cloud.core.event.InstanceProcessEvent;
 import org.macula.cloud.core.principal.SubjectPrincipal;
 import org.macula.cloud.core.principal.SubjectPrincipalCreatedEvent;
