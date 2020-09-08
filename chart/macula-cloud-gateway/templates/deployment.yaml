@@ -45,7 +45,7 @@ spec:
         resources:
 {{ toYaml .Values.resources | indent 10 }}
         livenessProbe:
-          initialDelaySeconds: 450
+          initialDelaySeconds: 120
           periodSeconds: 5
           timeoutSeconds: 3
           successThreshold: 1
@@ -54,7 +54,7 @@ spec:
             path: /actuator/health/liveness
             port: {{ include "management.server.port" . }}
         readinessProbe:
-          initialDelaySeconds: 450
+          initialDelaySeconds: 120
           periodSeconds: 5
           timeoutSeconds: 3
           successThreshold: 1
