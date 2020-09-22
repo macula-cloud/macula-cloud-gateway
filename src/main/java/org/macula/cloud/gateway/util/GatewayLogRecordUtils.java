@@ -1,13 +1,13 @@
 package org.macula.cloud.gateway.util;
 
+import java.util.Map;
+
 import org.macula.cloud.core.domain.GatewayLogRecord;
 import org.springframework.cloud.gateway.route.Route;
 import org.springframework.cloud.gateway.support.ServerWebExchangeUtils;
 import org.springframework.http.server.reactive.ServerHttpRequest;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.server.ServerWebExchange;
-
-import com.alibaba.fastjson.JSONObject;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -19,14 +19,15 @@ public class GatewayLogRecordUtils {
 				authentication.getName());
 		GatewayLogRecord logRecord = new GatewayLogRecord();
 		ServerHttpRequest request = exchange.getRequest();
-		JSONObject user = (JSONObject) exchange.getAttributes().get(Constants.FILTER_USER);
+		@SuppressWarnings("unchecked")
+		Map<String, Object> user = (Map<String, Object>) exchange.getAttributes().get(Constants.FILTER_USER);
 		//		SysApplication openApplication = b (SysApplication) exchange.getAttributes()
 		//				.get(Constants.FILTER_OPEN_APPLICATION);
 		logRecord.setUrl(request.getURI().toString());
 		logRecord.setRemoteAddress(request.getRemoteAddress().getHostName() + ":" + request.getRemoteAddress().getPort());
 		logRecord.setMethod(request.getMethod().toString());
 		logRecord.setStatusCode(null == exchange.getResponse().getStatusCode() ? 200 : exchange.getResponse().getStatusCode().value());
-		logRecord.setUsername(null == user ? "" : (user.getString("username") + ":" + user.getString("origin")));
+		logRecord.setUsername(null == user ? "" : (user.get("username") + ":" + user.get("origin")));
 		//		logRecord.setApplication(null == openApplication ? "" : openApplication.getAppName());
 		logRecord.setStartTime(start);
 		logRecord.setEndTime(end);

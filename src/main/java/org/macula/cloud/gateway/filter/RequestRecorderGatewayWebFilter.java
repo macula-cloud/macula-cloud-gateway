@@ -1,9 +1,9 @@
 package org.macula.cloud.gateway.filter;
 
 import org.macula.cloud.api.context.CloudApplicationContext;
-import org.macula.cloud.core.event.GatewayLogRecordEvent;
 import org.macula.cloud.core.event.InstanceProcessEvent;
 import org.macula.cloud.core.utils.SecurityUtils;
+import org.macula.cloud.gateway.event.GatewayLogRecordEvent;
 import org.macula.cloud.gateway.util.GatewayLogRecordUtils;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.web.server.context.ServerSecurityContextRepository;

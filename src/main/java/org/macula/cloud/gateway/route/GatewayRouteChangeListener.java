@@ -1,7 +1,7 @@
 package org.macula.cloud.gateway.route;
 
 import org.macula.cloud.core.domain.GatewayRoute;
-import org.macula.cloud.core.event.GatewayRouteChangeEvent;
+import org.macula.cloud.gateway.event.GatewayRouteChangeEvent;
 import org.macula.cloud.gateway.util.GatewayRouteUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationListener;
