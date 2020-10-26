@@ -42,4 +42,4 @@ release-main:
   - /^hotfix-.*$/
 
 before_script:
-   - docker login -u ${env.DOCKER_USER} -p ${env.DOCKER_PWD} registry.cn-shanghai.aliyuncs.com
+   - docker login -u ${DOCKER_USER} -p ${DOCKER_PWD} registry.cn-shanghai.aliyuncs.com
