@@ -1,4 +1,4 @@
-FROM pdsd-registry.infinitus.com.cn/tools/javabase:0.8.2
+FROM registry.cn-shanghai.aliyuncs.com/c7n/javabase:0.10.0
 ARG JAR_FILE 
 ARG SERVICE_NAME
 ENV JAR_FILE=${JAR_FILE}
